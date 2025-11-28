@@ -612,6 +612,7 @@ const CryptoDashboard: React.FC<CryptoDashboardProps> = ({ initialDark = true, o
         isDark={isDark}
         currentPage={currentPage}
         onNavigate={(page) => setCurrentPage(page as PageType)}
+        onViewComponents={onViewComponents}
         navItems={navItems}
       />
 

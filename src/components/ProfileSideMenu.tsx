@@ -7,6 +7,7 @@ interface ProfileSideMenuProps {
   isDark: boolean;
   currentPage: string;
   onNavigate: (page: string) => void;
+  onViewComponents?: () => void;
   navItems: Array<{
     id: string;
     label: string;
@@ -20,6 +21,7 @@ export const ProfileSideMenu: React.FC<ProfileSideMenuProps> = ({
   isDark,
   currentPage,
   onNavigate,
+  onViewComponents,
   navItems,
 }) => {
   // Close menu when clicking outside
@@ -140,6 +142,32 @@ export const ProfileSideMenu: React.FC<ProfileSideMenuProps> = ({
         {/* Menu Items */}
         <div className="overflow-y-auto h-[calc(100vh-120px)] pb-20">
           <div className="p-4 space-y-1">
+            {/* View Components Button */}
+            {onViewComponents && (
+              <div className="mb-4">
+                <button
+                  onClick={() => {
+                    onViewComponents();
+                    onClose();
+                  }}
+                  className={cn(
+                    'w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 border',
+                    isDark
+                      ? 'bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 border-emerald-500/30 text-emerald-400 hover:from-emerald-500/30 hover:to-cyan-500/30'
+                      : 'bg-gradient-to-r from-emerald-50 to-cyan-50 border-emerald-200 text-emerald-600 hover:from-emerald-100 hover:to-cyan-100'
+                  )}
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                  </svg>
+                  <span>View Components</span>
+                  <svg className="w-4 h-4 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </button>
+              </div>
+            )}
+
             {/* Navigation Items */}
             <div className="mb-4">
               <p className={cn(
