@@ -421,7 +421,7 @@ const CryptoDashboard: React.FC<CryptoDashboardProps> = ({ initialDark = true, o
                     'text-lg font-bold tracking-tight',
                     isDark ? 'text-white' : 'text-slate-900'
                   )}>
-                    CryptoVault
+                    Fintech Pro Dashboard
                   </h1>
                   <div className="flex items-center gap-1">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
