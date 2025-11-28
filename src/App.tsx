@@ -13,6 +13,7 @@ import { PortfolioDonut } from './components/PortfolioDonut'
 import { QuickTradeWidget } from './components/QuickTradeWidget'
 import { MarketStats } from './components/MarketStats'
 import { AlertsWidget } from './components/AlertsWidget'
+import { DownloadSelector } from './components/DownloadSelector'
 
 // Import dashboard page
 import CryptoDashboard from './pages/CryptoDashboard'
@@ -72,6 +73,7 @@ function App() {
 
   const sections = [
     { id: 'hero', label: 'Overview' },
+    { id: 'download', label: 'Download Kit' },
     { id: 'market-stats', label: 'Market Stats' },
     { id: 'balance', label: 'Balance Widget' },
     { id: 'crypto', label: 'Crypto Ticker' },
@@ -282,6 +284,23 @@ function App() {
                     ))}
                   </div>
                 </div>
+              </div>
+            </section>
+
+            {/* Download Section */}
+            <section id="download" className="scroll-mt-24">
+              <SectionHeader 
+                title="Download UI Kit" 
+                description="Get the full package in your preferred format - React or Vue.js."
+                isDark={isDark}
+              />
+              <div className="mt-8 max-w-2xl">
+                <DownloadSelector 
+                  isDark={isDark} 
+                  onDownloadComplete={(format) => {
+                    console.log(`Downloaded: ${format}`)
+                  }}
+                />
               </div>
             </section>
 
@@ -640,11 +659,15 @@ function App() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         title="Secure Payment"
+        isDark={isDark}
       >
         <div className="space-y-4">
-          <p>Your payment is being processed securely. All transactions are encrypted and protected.</p>
-          <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-            <div className="flex items-center gap-2 text-green-700">
+          <p className={isDark ? 'text-slate-300' : 'text-gray-700'}>Your payment is being processed securely. All transactions are encrypted and protected.</p>
+          <div className={cn(
+            'p-4 border rounded-lg',
+            isDark ? 'bg-emerald-500/20 border-emerald-500/30' : 'bg-green-50 border-green-200'
+          )}>
+            <div className={cn('flex items-center gap-2', isDark ? 'text-emerald-400' : 'text-green-700')}>
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
@@ -740,6 +763,7 @@ function ModalTriggerCard({
         title={modalProps.title}
         variant={modalProps.variant}
         size={modalProps.size}
+        isDark={isDark}
       >
         {modalProps.children}
       </SecurityModal>

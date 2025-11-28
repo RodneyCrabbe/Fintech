@@ -195,20 +195,21 @@ export const HistoryPage: React.FC<HistoryPageProps> = ({
         isOpen={isDetailModalOpen}
         onClose={() => setIsDetailModalOpen(false)}
         title="Transaction Details"
+        isDark={isDark}
       >
         {selectedTransaction && (
           <div className="space-y-4">
             <div className={cn(
               'p-4 rounded-xl text-center',
               selectedTransaction.type === 'buy' || selectedTransaction.type === 'deposit' 
-                ? 'bg-emerald-50' 
-                : 'bg-red-50'
+                ? isDark ? 'bg-emerald-500/20' : 'bg-emerald-50'
+                : isDark ? 'bg-red-500/20' : 'bg-red-50'
             )}>
               <div className={cn(
                 'w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center text-2xl',
                 selectedTransaction.type === 'buy' || selectedTransaction.type === 'deposit' 
-                  ? 'bg-emerald-100' 
-                  : 'bg-red-100'
+                  ? isDark ? 'bg-emerald-500/30' : 'bg-emerald-100'
+                  : isDark ? 'bg-red-500/30' : 'bg-red-100'
               )}>
                 {selectedTransaction.type === 'buy' ? '↗' : 
                  selectedTransaction.type === 'sell' ? '↙' : 
@@ -218,58 +219,78 @@ export const HistoryPage: React.FC<HistoryPageProps> = ({
               <h3 className={cn(
                 'text-lg font-bold capitalize',
                 selectedTransaction.type === 'buy' || selectedTransaction.type === 'deposit' 
-                  ? 'text-emerald-700' 
-                  : 'text-red-700'
+                  ? isDark ? 'text-emerald-400' : 'text-emerald-700'
+                  : isDark ? 'text-red-400' : 'text-red-700'
               )}>
                 {selectedTransaction.type} {selectedTransaction.asset}
               </h3>
               <p className={cn(
                 'text-sm',
-                selectedTransaction.status === 'completed' ? 'text-emerald-600' :
-                selectedTransaction.status === 'pending' ? 'text-amber-600' : 'text-red-600'
+                selectedTransaction.status === 'completed' 
+                  ? isDark ? 'text-emerald-400' : 'text-emerald-600'
+                  : selectedTransaction.status === 'pending' 
+                    ? isDark ? 'text-amber-400' : 'text-amber-600' 
+                    : isDark ? 'text-red-400' : 'text-red-600'
               )}>
                 {selectedTransaction.status}
               </p>
             </div>
             
             <div className="space-y-3">
-              <div className="flex items-center justify-between p-3 bg-slate-100 rounded-lg">
-                <span className="text-sm text-slate-600">Amount</span>
-                <span className="font-semibold text-slate-900">
+              <div className={cn(
+                'flex items-center justify-between p-3 rounded-lg',
+                isDark ? 'bg-slate-800' : 'bg-slate-100'
+              )}>
+                <span className={cn('text-sm', isDark ? 'text-slate-400' : 'text-slate-600')}>Amount</span>
+                <span className={cn('font-semibold', isDark ? 'text-white' : 'text-slate-900')}>
                   {selectedTransaction.amount} {selectedTransaction.asset}
                 </span>
               </div>
-              <div className="flex items-center justify-between p-3 bg-slate-100 rounded-lg">
-                <span className="text-sm text-slate-600">Value</span>
-                <span className="font-semibold text-slate-900">
+              <div className={cn(
+                'flex items-center justify-between p-3 rounded-lg',
+                isDark ? 'bg-slate-800' : 'bg-slate-100'
+              )}>
+                <span className={cn('text-sm', isDark ? 'text-slate-400' : 'text-slate-600')}>Value</span>
+                <span className={cn('font-semibold', isDark ? 'text-white' : 'text-slate-900')}>
                   ${selectedTransaction.value?.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                 </span>
               </div>
               {selectedTransaction.fee > 0 && (
-                <div className="flex items-center justify-between p-3 bg-slate-100 rounded-lg">
-                  <span className="text-sm text-slate-600">Fee</span>
-                  <span className="font-semibold text-slate-900">
+                <div className={cn(
+                  'flex items-center justify-between p-3 rounded-lg',
+                  isDark ? 'bg-slate-800' : 'bg-slate-100'
+                )}>
+                  <span className={cn('text-sm', isDark ? 'text-slate-400' : 'text-slate-600')}>Fee</span>
+                  <span className={cn('font-semibold', isDark ? 'text-white' : 'text-slate-900')}>
                     ${selectedTransaction.fee?.toFixed(2)}
                   </span>
                 </div>
               )}
-              <div className="flex items-center justify-between p-3 bg-slate-100 rounded-lg">
-                <span className="text-sm text-slate-600">Date</span>
-                <span className="font-semibold text-slate-900">
+              <div className={cn(
+                'flex items-center justify-between p-3 rounded-lg',
+                isDark ? 'bg-slate-800' : 'bg-slate-100'
+              )}>
+                <span className={cn('text-sm', isDark ? 'text-slate-400' : 'text-slate-600')}>Date</span>
+                <span className={cn('font-semibold', isDark ? 'text-white' : 'text-slate-900')}>
                   {selectedTransaction.timestamp?.toLocaleString()}
                 </span>
               </div>
               {selectedTransaction.txHash && (
-                <div className="p-3 bg-slate-100 rounded-lg">
-                  <p className="text-sm text-slate-600 mb-1">Transaction Hash</p>
-                  <p className="font-mono text-xs text-slate-900 break-all">
+                <div className={cn('p-3 rounded-lg', isDark ? 'bg-slate-800' : 'bg-slate-100')}>
+                  <p className={cn('text-sm mb-1', isDark ? 'text-slate-400' : 'text-slate-600')}>Transaction Hash</p>
+                  <p className={cn('font-mono text-xs break-all', isDark ? 'text-slate-300' : 'text-slate-900')}>
                     {selectedTransaction.txHash}
                   </p>
                 </div>
               )}
             </div>
 
-            <button className="w-full py-3 bg-slate-900 text-white rounded-lg font-semibold hover:bg-slate-800 transition-colors">
+            <button className={cn(
+              'w-full py-3 rounded-lg font-semibold transition-colors',
+              isDark 
+                ? 'bg-slate-800 text-white hover:bg-slate-700' 
+                : 'bg-slate-900 text-white hover:bg-slate-800'
+            )}>
               View on Explorer
             </button>
           </div>
@@ -281,33 +302,44 @@ export const HistoryPage: React.FC<HistoryPageProps> = ({
         isOpen={isExportModalOpen}
         onClose={() => setIsExportModalOpen(false)}
         title="Export Transactions"
+        isDark={isDark}
       >
         <div className="space-y-4">
           {/* Date Range */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">From</label>
+              <label className={cn('block text-sm font-medium mb-2', isDark ? 'text-slate-300' : 'text-slate-700')}>From</label>
               <input
                 type="date"
                 value={dateFrom}
                 onChange={(e) => setDateFrom(e.target.value)}
-                className="w-full p-3 bg-slate-100 rounded-lg text-slate-900 outline-none"
+                className={cn(
+                  'w-full p-3 rounded-lg outline-none',
+                  isDark 
+                    ? 'bg-slate-800 text-white border border-slate-700' 
+                    : 'bg-slate-100 text-slate-900'
+                )}
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">To</label>
+              <label className={cn('block text-sm font-medium mb-2', isDark ? 'text-slate-300' : 'text-slate-700')}>To</label>
               <input
                 type="date"
                 value={dateTo}
                 onChange={(e) => setDateTo(e.target.value)}
-                className="w-full p-3 bg-slate-100 rounded-lg text-slate-900 outline-none"
+                className={cn(
+                  'w-full p-3 rounded-lg outline-none',
+                  isDark 
+                    ? 'bg-slate-800 text-white border border-slate-700' 
+                    : 'bg-slate-100 text-slate-900'
+                )}
               />
             </div>
           </div>
 
           {/* Format Selection */}
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Format</label>
+            <label className={cn('block text-sm font-medium mb-2', isDark ? 'text-slate-300' : 'text-slate-700')}>Format</label>
             <div className="space-y-2">
               {exportFormats.map((format) => (
                 <button
@@ -316,16 +348,20 @@ export const HistoryPage: React.FC<HistoryPageProps> = ({
                   className={cn(
                     'w-full flex items-center justify-between p-3 rounded-lg border transition-all',
                     selectedFormat === format.id
-                      ? 'bg-emerald-50 border-emerald-300'
-                      : 'bg-slate-50 border-slate-200 hover:border-slate-300'
+                      ? isDark 
+                        ? 'bg-emerald-500/20 border-emerald-500/50' 
+                        : 'bg-emerald-50 border-emerald-300'
+                      : isDark 
+                        ? 'bg-slate-800 border-slate-700 hover:border-slate-600' 
+                        : 'bg-slate-50 border-slate-200 hover:border-slate-300'
                   )}
                 >
                   <div className="text-left">
-                    <p className="font-medium text-slate-900">{format.label}</p>
-                    <p className="text-xs text-slate-500">{format.description}</p>
+                    <p className={cn('font-medium', isDark ? 'text-white' : 'text-slate-900')}>{format.label}</p>
+                    <p className={cn('text-xs', isDark ? 'text-slate-400' : 'text-slate-500')}>{format.description}</p>
                   </div>
                   {selectedFormat === format.id && (
-                    <svg className="w-5 h-5 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className={cn('w-5 h-5', isDark ? 'text-emerald-400' : 'text-emerald-500')} fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
                   )}
@@ -336,16 +372,20 @@ export const HistoryPage: React.FC<HistoryPageProps> = ({
 
           {/* Transaction Types */}
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Include</label>
+            <label className={cn('block text-sm font-medium mb-2', isDark ? 'text-slate-300' : 'text-slate-700')}>Include</label>
             <div className="flex flex-wrap gap-2">
               {['All', 'Buys', 'Sells', 'Deposits', 'Withdrawals', 'Transfers'].map((type) => (
                 <button
                   key={type}
                   className={cn(
-                    'px-3 py-1.5 text-xs font-medium rounded-lg transition-colors',
+                    'px-3 py-1.5 text-xs font-medium rounded-lg transition-colors border',
                     type === 'All'
-                      ? 'bg-emerald-500/20 text-emerald-600 border border-emerald-300'
-                      : 'bg-slate-100 text-slate-600 border border-slate-200 hover:border-slate-300'
+                      ? isDark 
+                        ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/50' 
+                        : 'bg-emerald-500/20 text-emerald-600 border-emerald-300'
+                      : isDark 
+                        ? 'bg-slate-800 text-slate-300 border-slate-700 hover:border-slate-600' 
+                        : 'bg-slate-100 text-slate-600 border-slate-200 hover:border-slate-300'
                   )}
                 >
                   {type}

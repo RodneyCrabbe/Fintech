@@ -15,6 +15,7 @@ import { PortfolioDonut } from '../components/PortfolioDonut';
 import { QuickTradeWidget } from '../components/QuickTradeWidget';
 import { MarketStats } from '../components/MarketStats';
 import { AlertsWidget } from '../components/AlertsWidget';
+import { ProfileSideMenu } from '../components/ProfileSideMenu';
 
 // Import Pages
 import { MarketsPage } from './MarketsPage';
@@ -46,6 +47,7 @@ const CryptoDashboard: React.FC<CryptoDashboardProps> = ({ initialDark = true, o
   const [isTradeModalOpen, setIsTradeModalOpen] = useState(false);
   const [lastTrade, setLastTrade] = useState<TradeNotification | null>(null);
   const [showNotification, setShowNotification] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
 
   // Sample data
   const recentTransactions = [
@@ -459,24 +461,6 @@ const CryptoDashboard: React.FC<CryptoDashboardProps> = ({ initialDark = true, o
 
             {/* Right Section */}
             <div className="flex items-center gap-4">
-              {/* Search */}
-              <div className={cn(
-                'hidden lg:flex items-center gap-2 px-4 py-2 rounded-xl border',
-                isDark ? 'bg-slate-800/50 border-slate-700' : 'bg-slate-100 border-slate-200'
-              )}>
-                <svg className={cn('w-4 h-4', isDark ? 'text-slate-500' : 'text-slate-400')} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <input
-                  type="text"
-                  placeholder="Search assets..."
-                  className={cn(
-                    'bg-transparent outline-none text-sm w-40',
-                    isDark ? 'text-white placeholder:text-slate-500' : 'text-slate-900 placeholder:text-slate-400'
-                  )}
-                />
-              </div>
-
               {/* View Components Button */}
               {onViewComponents && (
                 <button
@@ -525,11 +509,14 @@ const CryptoDashboard: React.FC<CryptoDashboardProps> = ({ initialDark = true, o
                 <span className="absolute top-1 right-1 w-2 h-2 bg-rose-500 rounded-full" />
               </button>
 
-              {/* User Avatar */}
-              <button className={cn(
-                'flex items-center gap-3 p-1.5 pr-4 rounded-xl transition-colors',
-                isDark ? 'hover:bg-slate-800' : 'hover:bg-slate-100'
-              )}>
+              {/* User Avatar / Profile Button */}
+              <button 
+                onClick={() => setIsProfileMenuOpen(true)}
+                className={cn(
+                  'flex items-center gap-3 p-1.5 pr-4 rounded-xl transition-colors',
+                  isDark ? 'hover:bg-slate-800' : 'hover:bg-slate-100'
+                )}
+              >
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center">
                   <span className="text-white text-sm font-bold">A</span>
                 </div>
@@ -618,54 +605,85 @@ const CryptoDashboard: React.FC<CryptoDashboardProps> = ({ initialDark = true, o
         </div>
       </nav>
 
+      {/* Profile Side Menu */}
+      <ProfileSideMenu
+        isOpen={isProfileMenuOpen}
+        onClose={() => setIsProfileMenuOpen(false)}
+        isDark={isDark}
+        currentPage={currentPage}
+        onNavigate={(page) => setCurrentPage(page as PageType)}
+        navItems={navItems}
+      />
+
       {/* Trade Success Modal */}
       <SecurityModal
         isOpen={isTradeModalOpen}
         onClose={() => setIsTradeModalOpen(false)}
         title="Trade Executed"
         variant="default"
+        isDark={isDark}
       >
         {lastTrade && (
           <div className="space-y-4">
             <div className={cn(
               'p-4 rounded-xl text-center',
-              lastTrade.type === 'buy' ? 'bg-emerald-50' : 'bg-red-50'
+              lastTrade.type === 'buy' 
+                ? isDark ? 'bg-emerald-500/20' : 'bg-emerald-50'
+                : isDark ? 'bg-red-500/20' : 'bg-red-50'
             )}>
               <div className={cn(
                 'w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center',
-                lastTrade.type === 'buy' ? 'bg-emerald-100' : 'bg-red-100'
+                lastTrade.type === 'buy' 
+                  ? isDark ? 'bg-emerald-500/30' : 'bg-emerald-100'
+                  : isDark ? 'bg-red-500/30' : 'bg-red-100'
               )}>
                 <svg className={cn(
                   'w-8 h-8',
-                  lastTrade.type === 'buy' ? 'text-emerald-600' : 'text-red-600'
+                  lastTrade.type === 'buy' 
+                    ? isDark ? 'text-emerald-400' : 'text-emerald-600'
+                    : isDark ? 'text-red-400' : 'text-red-600'
                 )} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
               <h3 className={cn(
                 'text-lg font-bold',
-                lastTrade.type === 'buy' ? 'text-emerald-700' : 'text-red-700'
+                lastTrade.type === 'buy' 
+                  ? isDark ? 'text-emerald-400' : 'text-emerald-700'
+                  : isDark ? 'text-red-400' : 'text-red-700'
               )}>
                 {lastTrade.type === 'buy' ? 'Purchase' : 'Sale'} Successful!
               </h3>
             </div>
             
             <div className="space-y-3">
-              <div className="flex items-center justify-between p-3 bg-slate-100 rounded-lg">
-                <span className="text-sm text-slate-600">Asset</span>
-                <span className="font-semibold text-slate-900">{lastTrade.asset}</span>
+              <div className={cn(
+                'flex items-center justify-between p-3 rounded-lg',
+                isDark ? 'bg-slate-800' : 'bg-slate-100'
+              )}>
+                <span className={cn('text-sm', isDark ? 'text-slate-400' : 'text-slate-600')}>Asset</span>
+                <span className={cn('font-semibold', isDark ? 'text-white' : 'text-slate-900')}>{lastTrade.asset}</span>
               </div>
-              <div className="flex items-center justify-between p-3 bg-slate-100 rounded-lg">
-                <span className="text-sm text-slate-600">Amount</span>
-                <span className="font-semibold text-slate-900">{lastTrade.amount} {lastTrade.asset}</span>
+              <div className={cn(
+                'flex items-center justify-between p-3 rounded-lg',
+                isDark ? 'bg-slate-800' : 'bg-slate-100'
+              )}>
+                <span className={cn('text-sm', isDark ? 'text-slate-400' : 'text-slate-600')}>Amount</span>
+                <span className={cn('font-semibold', isDark ? 'text-white' : 'text-slate-900')}>{lastTrade.amount} {lastTrade.asset}</span>
               </div>
-              <div className="flex items-center justify-between p-3 bg-slate-100 rounded-lg">
-                <span className="text-sm text-slate-600">Total</span>
-                <span className="font-semibold text-slate-900">${lastTrade.total.toFixed(2)}</span>
+              <div className={cn(
+                'flex items-center justify-between p-3 rounded-lg',
+                isDark ? 'bg-slate-800' : 'bg-slate-100'
+              )}>
+                <span className={cn('text-sm', isDark ? 'text-slate-400' : 'text-slate-600')}>Total</span>
+                <span className={cn('font-semibold', isDark ? 'text-white' : 'text-slate-900')}>${lastTrade.total.toFixed(2)}</span>
               </div>
-              <div className="flex items-center justify-between p-3 bg-slate-100 rounded-lg">
-                <span className="text-sm text-slate-600">Time</span>
-                <span className="font-semibold text-slate-900">
+              <div className={cn(
+                'flex items-center justify-between p-3 rounded-lg',
+                isDark ? 'bg-slate-800' : 'bg-slate-100'
+              )}>
+                <span className={cn('text-sm', isDark ? 'text-slate-400' : 'text-slate-600')}>Time</span>
+                <span className={cn('font-semibold', isDark ? 'text-white' : 'text-slate-900')}>
                   {lastTrade.timestamp.toLocaleTimeString()}
                 </span>
               </div>

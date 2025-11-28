@@ -357,35 +357,42 @@ export const WalletPage: React.FC<WalletPageProps> = ({
         isOpen={isDepositModalOpen}
         onClose={() => setIsDepositModalOpen(false)}
         title="Deposit Funds"
+        isDark={isDark}
       >
         <div className="space-y-4">
           <div className={cn(
             'p-4 rounded-xl text-center',
-            'bg-emerald-50'
+            isDark ? 'bg-emerald-500/20' : 'bg-emerald-50'
           )}>
-            <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-emerald-100 flex items-center justify-center">
-              <svg className="w-8 h-8 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className={cn(
+              'w-16 h-16 mx-auto mb-3 rounded-full flex items-center justify-center',
+              isDark ? 'bg-emerald-500/30' : 'bg-emerald-100'
+            )}>
+              <svg className={cn('w-8 h-8', isDark ? 'text-emerald-400' : 'text-emerald-600')} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
               </svg>
             </div>
-            <p className="text-sm text-slate-700">Scan QR code or copy address below</p>
+            <p className={cn('text-sm', isDark ? 'text-slate-300' : 'text-slate-700')}>Scan QR code or copy address below</p>
           </div>
           
           <div className="space-y-3">
-            <div className="p-3 bg-slate-100 rounded-lg">
-              <p className="text-xs text-slate-500 mb-1">Network</p>
-              <p className="font-medium text-slate-900">Ethereum (ERC-20)</p>
+            <div className={cn('p-3 rounded-lg', isDark ? 'bg-slate-800' : 'bg-slate-100')}>
+              <p className={cn('text-xs mb-1', isDark ? 'text-slate-400' : 'text-slate-500')}>Network</p>
+              <p className={cn('font-medium', isDark ? 'text-white' : 'text-slate-900')}>Ethereum (ERC-20)</p>
             </div>
-            <div className="p-3 bg-slate-100 rounded-lg">
-              <p className="text-xs text-slate-500 mb-1">Deposit Address</p>
-              <p className="font-mono text-sm text-slate-900 break-all">
+            <div className={cn('p-3 rounded-lg', isDark ? 'bg-slate-800' : 'bg-slate-100')}>
+              <p className={cn('text-xs mb-1', isDark ? 'text-slate-400' : 'text-slate-500')}>Deposit Address</p>
+              <p className={cn('font-mono text-sm break-all', isDark ? 'text-slate-300' : 'text-slate-900')}>
                 0x1a2b3c4d5e6f7890abcdef1234567890abcdef12
               </p>
             </div>
           </div>
 
-          <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg">
-            <p className="text-xs text-amber-700">
+          <div className={cn(
+            'p-3 border rounded-lg',
+            isDark ? 'bg-amber-500/20 border-amber-500/30' : 'bg-amber-50 border-amber-200'
+          )}>
+            <p className={cn('text-xs', isDark ? 'text-amber-300' : 'text-amber-700')}>
               ⚠️ Only send {selectedAsset} to this address. Sending other tokens may result in permanent loss.
             </p>
           </div>
@@ -401,14 +408,20 @@ export const WalletPage: React.FC<WalletPageProps> = ({
         isOpen={isWithdrawModalOpen}
         onClose={() => setIsWithdrawModalOpen(false)}
         title="Withdraw Funds"
+        isDark={isDark}
       >
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Asset</label>
+            <label className={cn('block text-sm font-medium mb-2', isDark ? 'text-slate-300' : 'text-slate-700')}>Asset</label>
             <select 
               value={selectedAsset}
               onChange={(e) => setSelectedAsset(e.target.value)}
-              className="w-full p-3 bg-slate-100 rounded-lg text-slate-900 outline-none"
+              className={cn(
+                'w-full p-3 rounded-lg outline-none',
+                isDark 
+                  ? 'bg-slate-800 text-white border border-slate-700' 
+                  : 'bg-slate-100 text-slate-900'
+              )}
             >
               <option value="BTC">Bitcoin (BTC)</option>
               <option value="ETH">Ethereum (ETH)</option>
@@ -418,41 +431,54 @@ export const WalletPage: React.FC<WalletPageProps> = ({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Amount</label>
+            <label className={cn('block text-sm font-medium mb-2', isDark ? 'text-slate-300' : 'text-slate-700')}>Amount</label>
             <div className="relative">
               <input
                 type="text"
                 value={withdrawAmount}
                 onChange={(e) => setWithdrawAmount(e.target.value)}
                 placeholder="0.00"
-                className="w-full p-3 bg-slate-100 rounded-lg text-slate-900 outline-none pr-16"
+                className={cn(
+                  'w-full p-3 rounded-lg outline-none pr-16',
+                  isDark 
+                    ? 'bg-slate-800 text-white border border-slate-700' 
+                    : 'bg-slate-100 text-slate-900'
+                )}
               />
-              <button className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium text-emerald-600">
+              <button className={cn(
+                'absolute right-3 top-1/2 -translate-y-1/2 text-xs font-medium',
+                isDark ? 'text-emerald-400' : 'text-emerald-600'
+              )}>
                 MAX
               </button>
             </div>
-            <p className="text-xs text-slate-500 mt-1">Available: 1.2345 {selectedAsset}</p>
+            <p className={cn('text-xs mt-1', isDark ? 'text-slate-400' : 'text-slate-500')}>Available: 1.2345 {selectedAsset}</p>
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">Recipient Address</label>
+            <label className={cn('block text-sm font-medium mb-2', isDark ? 'text-slate-300' : 'text-slate-700')}>Recipient Address</label>
             <input
               type="text"
               value={withdrawAddress}
               onChange={(e) => setWithdrawAddress(e.target.value)}
               placeholder="Enter wallet address"
-              className="w-full p-3 bg-slate-100 rounded-lg text-slate-900 outline-none"
+              className={cn(
+                'w-full p-3 rounded-lg outline-none',
+                isDark 
+                  ? 'bg-slate-800 text-white border border-slate-700' 
+                  : 'bg-slate-100 text-slate-900'
+              )}
             />
           </div>
 
-          <div className="p-3 bg-slate-100 rounded-lg space-y-2">
+          <div className={cn('p-3 rounded-lg space-y-2', isDark ? 'bg-slate-800' : 'bg-slate-100')}>
             <div className="flex justify-between text-sm">
-              <span className="text-slate-500">Network Fee</span>
-              <span className="text-slate-900">0.0005 {selectedAsset}</span>
+              <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>Network Fee</span>
+              <span className={isDark ? 'text-white' : 'text-slate-900'}>0.0005 {selectedAsset}</span>
             </div>
             <div className="flex justify-between text-sm">
-              <span className="text-slate-500">You will receive</span>
-              <span className="font-semibold text-slate-900">
+              <span className={isDark ? 'text-slate-400' : 'text-slate-500'}>You will receive</span>
+              <span className={cn('font-semibold', isDark ? 'text-white' : 'text-slate-900')}>
                 {withdrawAmount ? (parseFloat(withdrawAmount) - 0.0005).toFixed(4) : '0.0000'} {selectedAsset}
               </span>
             </div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { cn } from '@/lib/utils';
 
 interface SecurityModalProps {
   isOpen: boolean;
@@ -11,6 +12,7 @@ interface SecurityModalProps {
   closeOnOverlayClick?: boolean;
   closeOnEscape?: boolean;
   className?: string;
+  isDark?: boolean;
 }
 
 const SecurityModal: React.FC<SecurityModalProps> = ({
@@ -24,6 +26,7 @@ const SecurityModal: React.FC<SecurityModalProps> = ({
   closeOnOverlayClick = true,
   closeOnEscape = true,
   className = '',
+  isDark = true,
 }) => {
   const modalRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
@@ -35,9 +38,15 @@ const SecurityModal: React.FC<SecurityModalProps> = ({
   };
 
   const variantClasses = {
-    default: 'bg-white border border-gray-200 shadow-2xl',
-    outline: 'bg-white border-2 border-[#1E40AF] shadow-lg',
-    ghost: 'bg-white/95 backdrop-blur-sm border border-gray-100 shadow-xl',
+    default: isDark 
+      ? 'bg-slate-900 border border-slate-700 shadow-2xl' 
+      : 'bg-white border border-gray-200 shadow-2xl',
+    outline: isDark 
+      ? 'bg-slate-900 border-2 border-emerald-500/50 shadow-lg' 
+      : 'bg-white border-2 border-[#1E40AF] shadow-lg',
+    ghost: isDark 
+      ? 'bg-slate-900/95 backdrop-blur-sm border border-slate-700 shadow-xl' 
+      : 'bg-white/95 backdrop-blur-sm border border-gray-100 shadow-xl',
   };
 
   useEffect(() => {
@@ -119,11 +128,20 @@ const SecurityModal: React.FC<SecurityModalProps> = ({
         tabIndex={-1}
       >
         {/* Security Header */}
-        <div className="flex items-center justify-between p-6 border-b border-gray-100">
+        <div className={cn(
+          'flex items-center justify-between p-6 border-b',
+          isDark ? 'border-slate-700' : 'border-gray-100'
+        )}>
           <div className="flex items-center space-x-3">
-            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#1E40AF]/10">
+            <div className={cn(
+              'flex items-center justify-center w-10 h-10 rounded-full',
+              isDark ? 'bg-emerald-500/20' : 'bg-[#1E40AF]/10'
+            )}>
               <svg
-                className="w-5 h-5 text-[#1E40AF]"
+                className={cn(
+                  'w-5 h-5',
+                  isDark ? 'text-emerald-400' : 'text-[#1E40AF]'
+                )}
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -139,7 +157,10 @@ const SecurityModal: React.FC<SecurityModalProps> = ({
             </div>
             <h2
               id="modal-title"
-              className="text-xl font-semibold text-gray-900 tracking-tight"
+              className={cn(
+                'text-xl font-semibold tracking-tight',
+                isDark ? 'text-white' : 'text-gray-900'
+              )}
             >
               {title}
             </h2>
@@ -148,7 +169,12 @@ const SecurityModal: React.FC<SecurityModalProps> = ({
           {showCloseButton && (
             <button
               type="button"
-              className="flex items-center justify-center w-8 h-8 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#1E40AF] focus:ring-offset-1"
+              className={cn(
+                'flex items-center justify-center w-8 h-8 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-1',
+                isDark 
+                  ? 'text-slate-400 hover:text-white hover:bg-slate-800 focus:ring-emerald-500' 
+                  : 'text-gray-400 hover:text-gray-600 hover:bg-gray-100 focus:ring-[#1E40AF]'
+              )}
               onClick={onClose}
               aria-label="Close security modal"
             >
@@ -173,14 +199,22 @@ const SecurityModal: React.FC<SecurityModalProps> = ({
         {/* Modal Content */}
         <div
           id="modal-description"
-          className="p-6 text-gray-700 leading-relaxed"
+          className={cn(
+            'p-6 leading-relaxed',
+            isDark ? 'text-slate-300' : 'text-gray-700'
+          )}
         >
           {children}
         </div>
 
         {/* Security Badge */}
         <div className="px-6 pb-6">
-          <div className="flex items-center justify-center space-x-2 text-xs text-[#1E40AF] bg-[#1E40AF]/5 rounded-lg py-2 px-3 border border-[#1E40AF]/10">
+          <div className={cn(
+            'flex items-center justify-center space-x-2 text-xs rounded-lg py-2 px-3 border',
+            isDark 
+              ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20' 
+              : 'text-[#1E40AF] bg-[#1E40AF]/5 border-[#1E40AF]/10'
+          )}>
             <svg
               className="w-3 h-3"
               fill="currentColor"
