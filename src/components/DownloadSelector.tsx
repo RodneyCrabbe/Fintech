@@ -31,6 +31,11 @@ const formatIcons: Record<FormatType, React.ReactNode> = {
       <path d="M2 3h3.5L12 15l6.5-12H22L12 22 2 3zm4.5 0H9l3 5.5L15 3h2.5L12 13.5 6.5 3z"/>
     </svg>
   ),
+  html: (
+    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M4.136 3.012h15.729l-1.431 16.15-6.451 1.826-6.414-1.826-1.433-16.15zm5.266 7.302l-.173-2.249 7.633.019.173-2.039H6.916l.532 6.282h7.412l-.326 3.663-2.55.674-2.534-.674-.163-1.96H7.262l.306 3.67 4.412 1.238 4.445-1.238.627-7.386H9.402z"/>
+    </svg>
+  ),
 }
 
 // Format colors
@@ -46,6 +51,12 @@ const formatColors: Record<FormatType, { bg: string; bgDark: string; text: strin
     bgDark: 'bg-emerald-500/20', 
     text: 'text-emerald-500',
     border: 'border-emerald-500/50'
+  },
+  html: { 
+    bg: 'bg-orange-100', 
+    bgDark: 'bg-orange-500/20', 
+    text: 'text-orange-500',
+    border: 'border-orange-500/50'
   },
 }
 
@@ -294,7 +305,8 @@ export const DownloadSelector: React.FC<DownloadSelectorProps> = ({
                       : isSelected
                         ? cn('bg-gradient-to-r', 
                             format.id === 'react' ? 'from-cyan-500 to-blue-500' :
-                            'from-emerald-500 to-teal-500',
+                            format.id === 'vue' ? 'from-emerald-500 to-teal-500' :
+                            'from-orange-500 to-amber-500',
                             'text-white'
                           )
                         : isDark

@@ -1,8 +1,9 @@
 // Export all generators
 export { generateReactPackage, type ReactGeneratorOptions } from './reactGenerator'
 export { generateVuePackage, type VueGeneratorOptions } from './vueGenerator'
+export { generateHtmlPackage, type HtmlGeneratorOptions } from './htmlGenerator'
 
-export type FormatType = 'react' | 'vue'
+export type FormatType = 'react' | 'vue' | 'html'
 
 export interface GeneratorProgress {
   status: 'preparing' | 'generating' | 'downloading' | 'complete' | 'error'
@@ -32,5 +33,12 @@ export const AVAILABLE_FORMATS: FormatInfo[] = [
     description: 'Vue 3 SFC components with Composition API',
     fileExtension: 'zip',
     icon: 'vue'
+  },
+  {
+    id: 'html',
+    name: 'HTML/CSS',
+    description: 'Pure HTML & CSS with no dependencies',
+    fileExtension: 'zip',
+    icon: 'html'
   }
 ]

@@ -1,6 +1,7 @@
 import { 
   generateReactPackage, 
-  generateVuePackage, 
+  generateVuePackage,
+  generateHtmlPackage,
   type GeneratorProgress,
   type FormatType,
   AVAILABLE_FORMATS
@@ -55,6 +56,14 @@ export async function generatePackage(options: PackageOptions): Promise<void> {
       })
       break
 
+    case 'html':
+      await generateHtmlPackage({
+        includePages,
+        includeDocs,
+        onProgress: handleProgress
+      })
+      break
+
     default:
       throw new Error(`Unknown format: ${format}`)
   }
@@ -76,7 +85,7 @@ export async function generateAndDownloadPackage(
 export async function generateAllPackages(
   onProgress?: (progress: DownloadProgress) => void
 ): Promise<void> {
-  const formats: FormatType[] = ['react', 'vue']
+  const formats: FormatType[] = ['react', 'vue', 'html']
   const totalFormats = formats.length
   
   for (let i = 0; i < formats.length; i++) {

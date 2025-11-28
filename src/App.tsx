@@ -291,7 +291,7 @@ function App() {
             <section id="download" className="scroll-mt-24">
               <SectionHeader 
                 title="Download UI Kit" 
-                description="Get the full package in your preferred format - React or Vue.js."
+                description="Get the full package in your preferred format - React, Vue.js, or HTML/CSS."
                 isDark={isDark}
               />
               <div className="mt-8 max-w-2xl">
