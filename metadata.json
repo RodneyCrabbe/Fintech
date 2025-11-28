@@ -1,0 +1,34 @@
+{
+  "id": "gen_1764324291213",
+  "name": "Fintech Pro UI Kit",
+  "description": "A comprehensive UI design system tailored for fintech applications, banking platforms, and cryptocurrency exchanges. Features modern, secure, and user-friendly components optimized for financial services in the Dutch market.",
+  "price": 79,
+  "category": "Design Assets",
+  "product_type": "ui_kit",
+  "features": [
+    "• GDPR compliant design patterns for Dutch financial regulations",
+    "• Dark and light theme variations for all components",
+    "• Mobile-first responsive design optimized for banking apps",
+    "• Advanced data visualization components for financial analytics",
+    "• Pre-built dashboard layouts for crypto and traditional banking"
+  ],
+  "tags": [
+    "fintech",
+    "banking",
+    "crypto",
+    "dashboard",
+    "finance ui",
+    "ui_kit",
+    "ai-generated",
+    "trending"
+  ],
+  "trend_id": "trend_005",
+  "trend_name": "Fintech UI Design",
+  "file_count": 9,
+  "rating": 0,
+  "reviews": 0,
+  "downloads": 0,
+  "status": "draft",
+  "isGenerated": true,
+  "generated_at": "2025-11-28T10:04:51.213Z"
+}
